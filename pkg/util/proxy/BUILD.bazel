@@ -1,0 +1,43 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "dial.go",
+        "doc.go",
+        "transport.go",
+        "upgradeaware.go",
+    ],
+    importpath = "github.com/example/project/pkg/util/proxy",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_mxk_go_flowrate//flowrate:go_default_library",
+        "@io_k8s_apimachinery//pkg/api/errors:go_default_library",
+        "@io_k8s_apimachinery//pkg/util/httpstream:go_default_library",
+        "@io_k8s_apimachinery//pkg/util/net:go_default_library",
+        "@io_k8s_apimachinery//pkg/util/runtime:go_default_library",
+        "@io_k8s_apimachinery//pkg/util/sets:go_default_library",
+        "@io_k8s_apimachinery//third_party/forked/golang/netutil:go_default_library",
+        "@io_k8s_klog//:go_default_library",
+        "@org_golang_x_net//html:go_default_library",
+        "@org_golang_x_net//html/atom:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = [
+        "dial_test.go",
+        "transport_test.go",
+        "upgradeaware_test.go",
+    ],
+    embed = [":go_default_library"],
+    deps = [
+        "@com_github_stretchr_testify//assert:go_default_library",
+        "@com_github_stretchr_testify//require:go_default_library",
+        "@io_k8s_apimachinery//pkg/util/diff:go_default_library",
+        "@io_k8s_apimachinery//pkg/util/httpstream:go_default_library",
+        "@io_k8s_apimachinery//pkg/util/net:go_default_library",
+        "@org_golang_x_net//websocket:go_default_library",
+    ],
+)

@@ -1,0 +1,24 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["install.go"],
+    importpath = "github.com/example/project/pkg/apis/testapigroup/install",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@io_k8s_apimachinery//pkg/apis/testapigroup:go_default_library",
+        "@io_k8s_apimachinery//pkg/apis/testapigroup/v1:go_default_library",
+        "@io_k8s_apimachinery//pkg/runtime:go_default_library",
+        "@io_k8s_apimachinery//pkg/util/runtime:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["roundtrip_test.go"],
+    embed = [":go_default_library"],
+    deps = [
+        "@io_k8s_apimachinery//pkg/api/apitesting/roundtrip:go_default_library",
+        "@io_k8s_apimachinery//pkg/apis/testapigroup/fuzzer:go_default_library",
+    ],
+)
